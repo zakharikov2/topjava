@@ -13,7 +13,7 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
 
     private static AtomicInteger counter = new AtomicInteger(0);
 
-    Map<Integer, T> entryMap = new ConcurrentHashMap<>();
+    private Map<Integer, T> entryMap = new ConcurrentHashMap<>();
 
     public T save(T entry) {
         if (entry.isNew()) {
@@ -34,5 +34,9 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
 
     Collection<T> getCollection() {
         return entryMap.values();
+    }
+
+    public void setEntryMap(Map<Integer, T> entryMap) {
+        this.entryMap = entryMap;
     }
 }

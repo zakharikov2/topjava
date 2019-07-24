@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.DateTimeUtil.adjustEndDateTime;
+import static ru.javawebinar.topjava.util.DateTimeUtil.adjustStartDateTime;
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 
@@ -70,7 +72,7 @@ public class MealRestController {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
 
-        List<Meal> mealsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
+        List<Meal> mealsDateFiltered = service.getBetweenDateTimes(adjustStartDateTime(startDate), adjustEndDateTime(endDate), userId);
         return MealsUtil.getFilteredWithExcess(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
     }
 }
