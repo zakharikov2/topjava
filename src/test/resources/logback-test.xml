@@ -14,6 +14,7 @@
     <logger name="org.postgresql" level="debug"/>
     <logger name="org.springframework.jdbc" level="debug"/>
     <logger name="ru.javawebinar.topjava" level="debug"/>
+    <logger name="ru.javawebinar.topjava.service.MealServiceTest" level="info"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>
