@@ -31,7 +31,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.UserTestData.*;
 
 
-public class AbstractUserServiceTest extends AbstractServiceTest {
+abstract public class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
