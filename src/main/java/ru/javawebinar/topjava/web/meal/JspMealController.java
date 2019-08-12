@@ -71,7 +71,7 @@ public class JspMealController extends AbstractMealController {
         if (StringUtils.isEmpty(request.getParameter("id"))) {
             model.addAttribute("meal", super.create(meal));
         } else {
-            model.addAttribute("meal", super.update(meal, Integer.parseInt(request.getParameter("calories"))));
+            model.addAttribute("meal", super.update(meal, Integer.parseInt(request.getParameter("id"))));
         }
         return "redirect:meals";
     }
