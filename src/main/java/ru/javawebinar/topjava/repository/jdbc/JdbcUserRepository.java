@@ -9,16 +9,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class JdbcUserRepository implements UserRepository {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
+    private static final BeanPropertyRowMapper<Role> ROW_MAPPER_ROLES = BeanPropertyRowMapper.newInstance(Role.class);
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -59,7 +62,10 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User get(int id) {
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
-        return DataAccessUtils.singleResult(users);
+        User user = DataAccessUtils.singleResult(users);
+        List<Role> roles = jdbcTemplate.query("SELECT ur.role FROM user_roles ur WHERE user_id=?", ROW_MAPPER_ROLES, id);
+        user.setRoles(roles);
+        return user;
     }
 
     @Override
