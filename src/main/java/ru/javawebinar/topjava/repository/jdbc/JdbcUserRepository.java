@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -93,7 +94,9 @@ public class JdbcUserRepository implements UserRepository {
         return users;
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
+    @Transactional
     public void enable(int id, boolean enabled) {
         User user = get(id);
         user.setEnabled(enabled);

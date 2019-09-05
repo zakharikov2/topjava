@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.jpa;
 
 import org.hibernate.jpa.QueryHints;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +73,9 @@ public class JpaUserRepository implements UserRepository {
         return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     @Override
+    @Transactional
     public void enable(int id, boolean enabled) {
         User user = get(id);
         user.setEnabled(enabled);
