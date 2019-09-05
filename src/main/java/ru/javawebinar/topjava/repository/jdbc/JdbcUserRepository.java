@@ -93,6 +93,13 @@ public class JdbcUserRepository implements UserRepository {
         return users;
     }
 
+    @Override
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        save(user);
+    }
+
     private void insertRoles(User u) {
         Set<Role> roles = u.getRoles();
         if (!CollectionUtils.isEmpty(roles)) {
