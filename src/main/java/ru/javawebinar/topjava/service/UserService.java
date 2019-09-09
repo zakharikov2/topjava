@@ -56,6 +56,14 @@ public class UserService {
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        repository.save(user);  // !! need only for JDBC implementation
+    }
+
     public User getWithMeals(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
     }
