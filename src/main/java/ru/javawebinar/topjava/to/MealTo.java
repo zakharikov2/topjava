@@ -1,14 +1,22 @@
 package ru.javawebinar.topjava.to;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.javawebinar.topjava.model.Meal;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MealTo extends BaseTo {
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
 
+    @NotBlank
     private String description;
 
+    @NotNull
     private int calories;
 
     private boolean excess;
@@ -38,6 +46,32 @@ public class MealTo extends BaseTo {
 
     public boolean isExcess() {
         return excess;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    public void setExcess(boolean excess) {
+        this.excess = excess;
+    }
+
+    public void updateMeal(Meal meal) {
+        meal.setDateTime(dateTime);
+        meal.setDescription(description);
+        meal.setCalories(calories);
+    }
+
+    public Meal asNewMeal() {
+        return new Meal(null, dateTime, description, calories);
     }
 
     @Override
